@@ -7,6 +7,7 @@ class SliderPage extends StatefulWidget {
 
 class _SliderPageState extends State<SliderPage> {
   double _valorSlider = 100.0;
+  bool _bloquearCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,8 @@ class _SliderPageState extends State<SliderPage> {
         child: Column(
           children: <Widget>[
             _crearSlider(),
+            _crearCheckBok(),
+            _crearSwitcher(),
             Expanded(child: _crearImagen()),
           ],
         ),
@@ -33,11 +36,13 @@ class _SliderPageState extends State<SliderPage> {
         min: 10.0,
         label: 'Tamaño de la imagen',
         //divisions: 20,
-        onChanged: (valor) {
-          setState(() {
-            _valorSlider = valor;
-          });
-        });
+        onChanged: (_bloquearCheck)
+            ? null
+            : (valor) {
+                setState(() {
+                  _valorSlider = valor;
+                });
+              });
   }
 
   Widget _crearImagen() {
@@ -54,5 +59,33 @@ class _SliderPageState extends State<SliderPage> {
       width: _valorSlider,
       fit: BoxFit.contain,
     );
+  }
+
+  Widget _crearCheckBok() {
+/*
+    return Checkbox(value: _bloquearCheck, onChanged: (valor){
+      setState(() {
+        _bloquearCheck = valor;
+      });
+    });*/
+    return CheckboxListTile(
+        title: Text('Bloquear Slider con CheckBox'),
+        value: _bloquearCheck,
+        onChanged: (valor) {
+          setState(() {
+            _bloquearCheck = valor;
+          });
+        });
+  }
+
+  Widget _crearSwitcher() {
+    return SwitchListTile(
+        title: Text('Bloquear Slider con Switcher'),
+        value: _bloquearCheck,
+        onChanged: (valor) {
+          setState(() {
+            _bloquearCheck = valor;
+          });
+        });
   }
 }
